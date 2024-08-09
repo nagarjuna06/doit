@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import Icon from "./ui/icon";
+import LayoutButton from "./dashboard/LayoutButton";
+import ThemeButton from "./dashboard/ThemeButton";
 type Props = {
   menuClick: () => void;
 };
@@ -10,15 +13,15 @@ const Navbar = ({ menuClick }: Props) => {
         <Button size="icon" variant="ghost" onClick={menuClick}>
           <Icon name="menu" size={25} />
         </Button>
-        <div className="flex gap-3 items-center">
-          <Icon name="logo" color="#3F9142" size={30} />
-          <h3 className="text-primary font-bold text-2xl">DoIt</h3>
-        </div>
+        <Link to={"/"} className="flex gap-3 items-center text-primary">
+          <Icon name="logo" size={30} />
+          <h3 className="font-bold text-2xl">DoIt</h3>
+        </Link>
       </div>
-      <div className="flex gap-8 items-center">
+      <div className="flex gap-5 items-center">
         <Icon name="search" />
-        <Icon name="grid" />
-        <Icon name="dark" />
+        <LayoutButton />
+        <ThemeButton />
       </div>
     </nav>
   );

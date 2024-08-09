@@ -1,17 +1,20 @@
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
-
-import { useState } from "react";
+import useTask, { useAutoSave } from "@/redux/hooks/task";
 import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
-  const [open, setOpen] = useState<boolean>(true);
+  useAutoSave();
+  const { update_menu_open, menuOpen } = useTask();
+
   return (
-    <div>
-      <Navbar menuClick={() => setOpen(!open)} />
-      <div className="px-16">
-        {open && <Sidebar />}
-        <Outlet />
+    <div className="font-outfit">
+      <Navbar menuClick={update_menu_open} />
+      <div className="px-12 flex gap-x-12">
+        {menuOpen && <Sidebar />}
+        <div className="flex-grow-1">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

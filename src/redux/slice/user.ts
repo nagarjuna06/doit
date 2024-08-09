@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 type User = {
   id: number;
@@ -23,8 +22,15 @@ export const getUser = createAsyncThunk(
   "get-user",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get("https://dummyjson.com/users/10");
-      return data;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({
+            id: "9e9975e0-0de0-5975-ace7-aad7a8ce99f2",
+            username: "Arjun",
+            image: "/profile.png",
+          });
+        }, 1000);
+      });
     } catch (error) {
       return rejectWithValue(error);
     }
