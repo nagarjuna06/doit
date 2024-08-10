@@ -1,5 +1,3 @@
-import React from "react";
-
 const PlannedTasks = () => {
   return <div>PlannedTasks</div>;
 };
