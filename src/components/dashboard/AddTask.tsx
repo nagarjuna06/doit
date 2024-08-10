@@ -5,12 +5,12 @@ import { Textarea } from "../ui/textarea";
 import useTask from "@/redux/hooks/task";
 
 const AddTask = () => {
-  const { add_task } = useTask();
+  const { newTask } = useTask();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const content = form.get("content") as string;
-    add_task({
+    newTask({
       content,
       favorite: false,
       status: "TO_DO",

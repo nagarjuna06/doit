@@ -1,13 +1,11 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from ".";
 import {
-  getTasks,
-  addTask,
-  updateTask,
-  updateTaskStatus,
-  updateFavorite,
-  updateMenuOpen,
-  updateTasksToLocalStorage,
+  createTask,
+  editTask,
+  getDataFromLocalStorage,
+  saveDataToLocalStorage,
+  setMenuOpen,
 } from "../slice/task";
 import { TaskProps } from "@/components/dashboard/TaskItem";
 
@@ -16,17 +14,11 @@ const useTask = () => {
   const dispatch = useAppDispatch();
 
   //add new task
-  const add_task = (payload: Omit<TaskProps, "id">) =>
-    dispatch(addTask(payload));
+  const newTask = (payload: Omit<TaskProps, "id">) =>
+    dispatch(createTask(payload));
 
   // edit the task
-  const update_task = (payload: TaskProps) => dispatch(updateTask(payload));
-  // update the task status
-  const update_task_status = (id: string) => dispatch(updateTaskStatus({ id }));
-  // update the favorite status of the task
-  const update_favorite = (id: string) => dispatch(updateFavorite({ id }));
-  // update the menu open status
-  const update_menu_open = () => dispatch(updateMenuOpen());
+  const updateTask = (payload: TaskProps) => dispatch(editTask(payload));
 
   // filter tasks based on status (TO_DO, COMPLETED)
   const filteredTasks = useMemo(() => {
@@ -37,12 +29,11 @@ const useTask = () => {
     return { todoTasks, completedTasks };
   }, [state.tasks]);
 
+  const setMenu = () => dispatch(setMenuOpen());
   return {
-    add_task,
-    update_task,
-    update_task_status,
-    update_favorite,
-    update_menu_open,
+    newTask,
+    updateTask,
+    setMenu,
     ...state,
     ...filteredTasks,
   };
@@ -52,16 +43,21 @@ export default useTask;
 
 export const useAutoSave = () => {
   const dispatch = useAppDispatch();
-  const handleSave = () => dispatch(updateTasksToLocalStorage());
+
+  const handleSave = useCallback(() => {
+    dispatch(saveDataToLocalStorage());
+  }, [dispatch]);
+
   useEffect(() => {
     // get the tasks from the local storage
-    dispatch(getTasks());
+    dispatch(getDataFromLocalStorage());
     window.addEventListener("beforeunload", () => handleSave);
     window.addEventListener("unload", handleSave);
+
     return () => {
       window.removeEventListener("beforeunload", handleSave);
       window.removeEventListener("unload", handleSave);
     };
-  }, [dispatch]);
+  }, [dispatch, handleSave]);
   return null;
 };

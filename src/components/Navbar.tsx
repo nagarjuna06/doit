@@ -8,7 +8,7 @@ type Props = {
 };
 const Navbar = ({ menuClick }: Props) => {
   return (
-    <nav className="p-4 flex justify-between ">
+    <nav className="p-4 flex justify-between sticky top-0 z-10 bg-background">
       <div className="flex gap-5 items-center">
         <Button size="icon" variant="ghost" onClick={menuClick}>
           <Icon name="menu" size={25} />

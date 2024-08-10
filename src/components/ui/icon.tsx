@@ -1,3 +1,6 @@
+import { cn } from "@/lib/utils";
+import { HtmlHTMLAttributes } from "react";
+
 const MenuIcon = () => {
   return (
     <svg
@@ -371,6 +374,87 @@ const DownArrow = () => {
   );
 };
 
+const InfoIcon = () => {
+  return (
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 17 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="8.75507" cy="8.52497" r="7.97749" fill="#BDBDBD" />
+      <rect
+        x="7.42554"
+        y="6.7522"
+        width="2.65916"
+        height="7.09109"
+        rx="1.32958"
+        fill="currentColor"
+      />
+      <rect
+        x="7.42554"
+        y="3.20667"
+        width="2.65916"
+        height="2.65916"
+        rx="1.32958"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+const CheckIcon = () => {
+  return (
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 12 10"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4 9.4L0 5.4L1.4 4L4 6.6L10.6 0L12 1.4L4 9.4Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+const CloseIcon = () => {
+  return (
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 14 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1.4 14.5L0 13.1L5.6 7.5L0 1.9L1.4 0.5L7 6.1L12.6 0.5L14 1.9L8.4 7.5L14 13.1L12.6 14.5L7 8.9L1.4 14.5Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+const TrashIcon = () => {
+  return (
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 24 27"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M5.02666 26.6417C4.25888 26.6417 3.61832 26.385 3.10499 25.8717C2.59166 25.3583 2.33443 24.7172 2.33332 23.9483V3.30834H0.666656V1.64167H7.33332V0.358337H17.3333V1.64167H24V3.30834H22.3333V23.95C22.3333 24.7167 22.0767 25.3572 21.5633 25.8717C21.05 26.3861 20.4089 26.6428 19.64 26.6417H5.02666ZM8.67999 21.6417H10.3467V6.64167H8.67999V21.6417ZM14.32 21.6417H15.9867V6.64167H14.32V21.6417Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
 const icons = {
   menu: MenuIcon,
   logo: LogoIcon,
@@ -389,18 +473,26 @@ const icons = {
   bell: BellIcon,
   repeat: RepeatIcon,
   "down-arrow": DownArrow,
+  info: InfoIcon,
+  check: CheckIcon,
+  close: CloseIcon,
+  trash: TrashIcon,
 };
 
 export type IconProps = {
   name: keyof typeof icons;
   color?: string;
   size?: number;
+  className?: HtmlHTMLAttributes<HTMLDivElement>["className"];
 };
 
-const Icon = ({ name, size = 20, color = "" }: IconProps) => {
+const Icon = ({ name, size = 20, color = "", className }: IconProps) => {
   const SVGIcon = icons[name];
   return (
-    <div style={{ width: size, height: size, color }} className="text-inherit">
+    <div
+      style={{ width: size, height: size, color }}
+      className={cn("text-inherit", className)}
+    >
       <SVGIcon />
     </div>
   );

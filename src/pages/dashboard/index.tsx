@@ -5,12 +5,12 @@ import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   useAutoSave();
-  const { update_menu_open, menuOpen } = useTask();
+  const { setMenu, menuOpen } = useTask();
 
   return (
     <div className="font-outfit">
-      <Navbar menuClick={update_menu_open} />
-      <div className="px-12 flex gap-x-12">
+      <Navbar menuClick={setMenu} />
+      <div className="flex">
         {menuOpen && <Sidebar />}
         <div className="flex-grow-1">
           <Outlet />

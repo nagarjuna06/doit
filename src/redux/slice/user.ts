@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type User = {
-  id: number;
+  id: string;
   username: string;
   image: string;
 };
@@ -18,24 +18,17 @@ const initialState: StateProps = {
   error: "",
 };
 
-export const getUser = createAsyncThunk(
-  "get-user",
-  async (_, { rejectWithValue }) => {
-    try {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve({
-            id: "9e9975e0-0de0-5975-ace7-aad7a8ce99f2",
-            username: "Arjun",
-            image: "/profile.png",
-          });
-        }, 1000);
+export const getUser = createAsyncThunk("get-user", async () => {
+  return new Promise<User>((resolve) => {
+    setTimeout(() => {
+      resolve({
+        id: "9e9975e0-0de0-5975-ace7-aad7a8ce99f2",
+        username: "Arjun",
+        image: "/profile.png",
       });
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
+    }, 1000);
+  });
+});
 
 const userSlice = createSlice({
   name: "user",
@@ -49,10 +42,6 @@ const userSlice = createSlice({
     build.addCase(getUser.fulfilled, (state, { payload }) => {
       state.user = payload;
       state.loading = false;
-    });
-    build.addCase(getUser.rejected, (state) => {
-      state.loading = false;
-      state.error = "Failed to load User Data";
     });
   },
 });
