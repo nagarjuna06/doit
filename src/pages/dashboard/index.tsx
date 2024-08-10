@@ -1,3 +1,4 @@
+import AuthProvider from "@/components/auth-provider";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import useTask, { useAutoSave } from "@/redux/hooks/task";
@@ -8,15 +9,17 @@ const Dashboard = () => {
   const { setMenu, menuOpen } = useTask();
 
   return (
-    <div className="font-outfit">
-      <Navbar menuClick={setMenu} />
-      <div className="flex">
-        {menuOpen && <Sidebar />}
-        <div className="flex-grow-1">
-          <Outlet />
+    <AuthProvider>
+      <div className="font-outfit">
+        <Navbar menuClick={setMenu} />
+        <div className="flex">
+          {menuOpen && <Sidebar />}
+          <div className="flex-grow-1">
+            <Outlet />
+          </div>
         </div>
       </div>
-    </div>
+    </AuthProvider>
   );
 };
 

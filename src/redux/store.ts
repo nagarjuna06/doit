@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import user from "./slice/user";
+import user from "./slice/auth";
 import task from "./slice/task";
 
 export const store = configureStore({

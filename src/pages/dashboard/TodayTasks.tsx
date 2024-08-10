@@ -1,14 +1,13 @@
 import AddTask from "@/components/dashboard/AddTask";
 import EditTask from "@/components/dashboard/EditTask";
-import TaskItem, { TaskProps } from "@/components/dashboard/TaskItem";
+import TaskItem from "@/components/dashboard/TaskItem";
 import Icon from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 import useTask from "@/redux/hooks/task";
-import { useState } from "react";
 
 const TodayTasks = () => {
-  const [task, setTask] = useState<TaskProps>();
-  const { layout, todoTasks, completedTasks, loading } = useTask();
+  const { layout, todoTasks, completedTasks, loading, task, setTask } =
+    useTask();
   if (loading) return <p>Loading...</p>;
   return (
     <div
@@ -54,7 +53,8 @@ const TodayTasks = () => {
         </div>
       </div>
       {/* task edit */}
-      {task && <EditTask task={task} onClick={() => setTask(undefined)} />}
+
+      <EditTask />
     </div>
   );
 };

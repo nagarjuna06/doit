@@ -1,11 +1,10 @@
+import useTask from "@/redux/hooks/task";
 import { Button } from "../ui/button";
 import Icon, { IconProps } from "../ui/icon";
-import TaskItem, { TaskProps } from "./TaskItem";
+import { Textarea } from "../ui/textarea";
+import TaskItem from "./TaskItem";
+import { ChangeEvent } from "react";
 
-type Props = {
-  task: TaskProps;
-  onClick: () => void;
-};
 type FeatureType = {
   icon: IconProps["name"];
   title: string;
@@ -29,7 +28,17 @@ const features: FeatureType[] = [
   },
 ];
 
-const EditTask = ({ task, onClick }: Props) => {
+const EditTask = () => {
+  const { updateTask, setTask, task, removeTask } = useTask();
+
+  if (!task) return;
+
+  const handleBlur = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const content = e.target.value;
+    setTask({ ...task, content });
+    updateTask({ ...task, content });
+  };
+
   return (
     <div className="w-full max-w-[350px] bg-[#EEF6EF] pt-6 p-2 flex flex-col justify-between  pl-5 dark:bg-[#2C2C2C]">
       <div>
@@ -41,14 +50,29 @@ const EditTask = ({ task, onClick }: Props) => {
             <p>{each.title}</p>
           </div>
         ))}
-        <div className="border-t-2 p-5">Add Notes</div>
+        <div className="border-t-2 p-5">
+          <Textarea
+            placeholder="Add Notes"
+            className="mb-3 border-none resize-none bg-transparent"
+            required
+            onBlur={handleBlur}
+          />
+        </div>
       </div>
       <div className="flex justify-between items-center border-t-2 p-5">
-        <Button variant={"ghost"} size={"icon"} onClick={onClick}>
+        <Button
+          variant={"ghost"}
+          size={"icon"}
+          onClick={() => setTask(undefined)}
+        >
           <Icon name="close" />
         </Button>
         <p>Created Today</p>
-        <Button variant={"ghost"} size={"icon"}>
+        <Button
+          variant={"ghost"}
+          size={"icon"}
+          onClick={() => removeTask(task.id)}
+        >
           <Icon name="trash" />
         </Button>
       </div>

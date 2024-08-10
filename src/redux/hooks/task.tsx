@@ -2,10 +2,12 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from ".";
 import {
   createTask,
+  deleteTask,
   editTask,
   getDataFromLocalStorage,
   saveDataToLocalStorage,
   setMenuOpen,
+  setTask as SetTask,
 } from "../slice/task";
 import { TaskProps } from "@/components/dashboard/TaskItem";
 
@@ -20,6 +22,9 @@ const useTask = () => {
   // edit the task
   const updateTask = (payload: TaskProps) => dispatch(editTask(payload));
 
+  // remove the task
+  const removeTask = (id: string) => dispatch(deleteTask(id));
+
   // filter tasks based on status (TO_DO, COMPLETED)
   const filteredTasks = useMemo(() => {
     const todoTasks = state.tasks.filter((task) => task.status === "TO_DO");
@@ -30,10 +35,14 @@ const useTask = () => {
   }, [state.tasks]);
 
   const setMenu = () => dispatch(setMenuOpen());
+  const setTask = (task?: TaskProps) => dispatch(SetTask(task));
+
   return {
     newTask,
     updateTask,
+    removeTask,
     setMenu,
+    setTask,
     ...state,
     ...filteredTasks,
   };

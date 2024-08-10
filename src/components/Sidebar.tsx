@@ -1,8 +1,9 @@
-import useSession from "@/redux/hooks/user";
+import useAuth from "@/redux/hooks/auth";
 import Icon, { IconProps } from "./ui/icon";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import Stats from "./dashboard/Stats";
+import { Button } from "./ui/button";
 
 type MenuItem = {
   icon: IconProps["name"];
@@ -38,7 +39,7 @@ const menuList: MenuItem[] = [
 ];
 
 const Sidebar = () => {
-  const { user, loading, error, pathname } = useSession();
+  const { user, loading, error, pathname, logout } = useAuth();
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
   return (
@@ -52,10 +53,13 @@ const Sidebar = () => {
         />
 
         <h3>Hey,{user?.username}</h3>
+        <Button variant={"btn"} onClick={logout}>
+          Logout
+        </Button>
       </div>
 
       {/* menu */}
-      <div className="bg-background py-10 w-[240px] m-5 mt-28">
+      <div className="bg-background py-10 w-[240px] m-5 mt-40">
         {menuList.map((each, i) => (
           <Link
             to={each.href}

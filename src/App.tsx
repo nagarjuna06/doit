@@ -9,12 +9,18 @@ import TodayTasks from "./pages/dashboard/TodayTasks";
 import ImportantTasks from "./pages/dashboard/ImportantTasks";
 import PlannedTasks from "./pages/dashboard/PlannedTasks";
 import AssignedTasks from "./pages/dashboard/AssignedTasks";
+import Login from "./pages/login";
 
 const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <Login />,
+  },
   {
     path: "/",
     element: <Navigate to="/dashboard/today" />,
   },
+
   {
     path: "/dashboard",
     element: <Dashboard />,

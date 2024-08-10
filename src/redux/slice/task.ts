@@ -8,6 +8,7 @@ type StateTypes = {
   loading: boolean;
   layout: "grid" | "list";
   menuOpen: boolean;
+  task?: TaskProps;
 };
 
 const initialState: StateTypes = {
@@ -83,6 +84,9 @@ const taskSlice = createSlice({
     setMenuOpen: (state) => {
       state.menuOpen = !state.menuOpen;
     },
+    setTask: (state, { payload }) => {
+      state.task = payload;
+    },
   },
   extraReducers: (builder) => {
     //get data from localStorage pending
@@ -136,15 +140,19 @@ const taskSlice = createSlice({
     });
     // delete task fulfilled
     builder.addCase(deleteTask.fulfilled, (state, { payload }) => {
+      toast.success("Task Deleted", {
+        id: "delete-task",
+      });
       const index = state.tasks.findIndex((task) => task.id === payload.id);
       if (index !== -1) {
         state.tasks.splice(index, 1);
+        state.task = undefined;
       }
     });
   },
 });
 
-export const { setMenuOpen, updateLayout, saveDataToLocalStorage } =
+export const { setMenuOpen, updateLayout, saveDataToLocalStorage, setTask } =
   taskSlice.actions;
 
 export default taskSlice.reducer;
