@@ -128,8 +128,13 @@ const taskSlice = createSlice({
         id: "edit-task",
       });
       const index = state.tasks.findIndex((task) => task.id === payload.id);
+
       if (index !== -1) {
-        state.tasks[index] = { ...state.tasks[index], ...payload };
+        const task = { ...state.tasks[index], ...payload };
+        state.tasks[index] = task;
+        if (state.tasks[index].id === state.task?.id) {
+          state.task = task;
+        }
       }
     });
     // delete task pending

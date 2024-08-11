@@ -14,7 +14,7 @@ const Dashboard = () => {
         <Navbar menuClick={setMenu} />
         <div className="flex">
           {menuOpen && <Sidebar />}
-          <div className="flex-grow-1">
+          <div className="flex-grow">
             <Outlet />
           </div>
         </div>

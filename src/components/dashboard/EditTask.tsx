@@ -35,8 +35,11 @@ const EditTask = () => {
 
   const handleBlur = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const content = e.target.value;
-    setTask({ ...task, content });
-    updateTask({ ...task, content });
+    if (content) {
+      setTask({ ...task, content });
+      updateTask({ ...task, content });
+    }
+    e.target.value = "";
   };
 
   return (

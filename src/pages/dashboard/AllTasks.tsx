@@ -1,5 +1,7 @@
+import Feature from "@/components/dashboard/Feature";
+
 const AllTasks = () => {
-  return <div>AllTasks</div>;
+  return <Feature title="All Tasks" />;
 };
 
 export default AllTasks;

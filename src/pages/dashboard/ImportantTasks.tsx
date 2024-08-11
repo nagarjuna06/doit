@@ -1,5 +1,7 @@
+import Feature from "@/components/dashboard/Feature";
+
 const ImportantTasks = () => {
-  return <div>ImportantTasks</div>;
+  return <Feature title="Important Tasks" />;
 };
 
 export default ImportantTasks;
